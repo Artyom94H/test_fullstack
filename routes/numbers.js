@@ -23,7 +23,6 @@ router.get('/', function(req, res, next) {
 router.get('/data', async function(req, res, next) {
   const preparedData = AverageCalculatorService.prepareData(list);
   const { emitLoader } = req.query;
-  console.log('emitLoader', emitLoader);
   if (emitLoader) {
     await emitTimeout(3000);
   }
