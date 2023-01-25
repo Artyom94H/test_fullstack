@@ -1,0 +1,24 @@
+.calculatedWrapper {
+    display: flex;
+    justify-content: center;
+    min-width: 320px;
+}
+
+.calculatedList {
+    min-width: 320px;
+}
+
+.list-item {
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid silver;
+    margin-bottom: 12px;
+}
+.loading {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.completed {
+    border-color: #6fd50f;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/numbers.css' />
+</head>
+<body>
+    <header>
+        <title><%= title %></title>
+    </header>
+    <main>
+        <div class="loader-wrapper hidden" id="globalLoader">
+            <span class="loader"></span>
+        </div>
+        <div class="container">
+            <div class="form-wrapper">
+                <form class="form" id="form">
+                    <div class="form-item">
+                        <label for="number" class="form-label">
+                            Number
+                        </label>
+                        <input id="number" type="number" name="number" class="form-input" placeholder="Example: 14" required />
+                    </div>
+                    <div class="form-item">
+                        <button class="button" type="submit" id="submit">
+                            отправить и получить среднее
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="calculatedWrapper">
+                <div class="calculatedList" id="list">
+                </div>
+            </div>
+        </div>
+    </main>
+<script src="/javascripts/numbers.js"></script>
+</body>
+</html>
