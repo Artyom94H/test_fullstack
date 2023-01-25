@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messages</title>
+    <link rel='stylesheet' href='/stylesheets/messages.css' />
+</head>
+<body>
+    <header>
+        <h1>Messages</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="form-wrapper">
+                <form method="post" class="form" action="/messages">
+                    <div class="form-item">
+                        <label for="author" class="form-label">
+                            Author
+                        </label>
+                        <input id="author" type="text" name="author" class="form-input" placeholder="Example: Donald" />
+                    </div>
+                    <div class="form-item">
+                        <label for="text" class="form-label">
+                            Text
+                        </label>
+                        <textarea id="text" name="text" class="form-input" placeholder="Example: Mike"></textarea>
+                    </div>
+                    <div class="form-item">
+                        <button type="submit" class="button">
+                            разместить сообщение
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!--TODO if there is time-->
+<!--            <div class="filters">-->
+<!--                <form action="/messages">-->
+<!--                    <p>-->
+<!--                        Сортировать по дате-->
+<!--                    </p>-->
+<!--                </form>-->
+<!--            </div>-->
+            <div class="messagesList">
+                <% for(let i = 0; i < messages.length; i++) { %>
+                    <div class="message-item">
+                        <p class="message-author">
+                            <%= messages[i].author %>
+                        </p>
+                        <p class="message-text">
+                            <%= messages[i].text %>
+                        </p>
+                        <span class="message-date">
+                            <%= messages[i].created_at %>
+                        </span>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
