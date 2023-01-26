@@ -5,7 +5,7 @@ const validationErrorHandler = (req, res, next) => {
     validationResult(req).throw();
     next();
   } catch (e) {
-    res.status(400).json(e);
+    res.status(422).json(e);
   }
 };
 
