@@ -113,6 +113,12 @@ a {
   text-align: center;
 }
 
+.errors {
+  display: flex;
+  justify-content: center;
+  color: red;
+}
+
 .link-item {
   padding: 20px;
   border: 1px solid #7085d5;

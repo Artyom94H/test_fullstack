@@ -3,6 +3,8 @@ const router = express.Router();
 
 const AverageCalculatorService = require('../services/average-calculator');
 const { emitTimeout } = require('../utils');
+const addNumberValidation = require('../middlewares/add-number.dto');
+const validationErrorHandler = require("../middlewares/error-handler");
 
 const list = [
   // {
@@ -32,7 +34,7 @@ router.get('/data', async function(req, res, next) {
 });
 
 /* POST number. */
-router.post('/', async function(req, res, next) {
+router.post('/', addNumberValidation('number').isNumeric(), validationErrorHandler, async function(req, res, next) {
   AverageCalculatorService.addNumber(+req.body.number, list);
   const preparedData = AverageCalculatorService.prepareData(list);
   await emitTimeout();

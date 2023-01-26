@@ -1,9 +1,33 @@
+const parseJSON = (response) => {
+  return new Promise((resolve) => response.json()
+    .then((json) => resolve({
+      status: response.status,
+      ok: response.ok,
+      ...json,
+    })));
+}
+
+const request = (url, options) => {
+  return new Promise((resolve, reject) => {
+    fetch(url, options)
+      .then(parseJSON)
+      .then(res => {
+        if (res.status >= 400) {
+          return reject(res);
+        }
+
+        return resolve(res);
+      })
+  });
+};
+
 class NumbersService {
   // Define buttons and other html elements
   constructor() {
     this.globalLoader = document.getElementById('globalLoader');
     this.submitButton = document.getElementById('submit');
     this.listContainer = document.getElementById('list');
+    this.errorsContainer = document.getElementById('errors');
     this.input = document.getElementById('number');
     this.form = document.getElementById('form');
 
@@ -14,7 +38,7 @@ class NumbersService {
     try {
       this.setLoading();
       const query = window.location.search || '';
-      const { data } = await (await fetch(`/numbers/data${query}`)).json();
+      const { data } = await request(`/numbers/data${query}`);
       this.render(data);
     } catch (e) {
       console.log('Error', e);
@@ -26,18 +50,20 @@ class NumbersService {
   async saveNumber(number) {
     try {
       this.setInProcess();
-      const { data } = await (await fetch('/numbers', {
+      this.printErrors(null);
+      const { data } = await request('/numbers', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ number }),
-      })).json();
+      });
       this.input.value = '';
       this.render(data);
     } catch (e) {
       console.log('Error', e);
+      this.printErrors(e.errors);
     } finally {
       this.setInProcess(false);
     }
@@ -65,6 +91,17 @@ class NumbersService {
     const element = document.createElement('p');
     element.append(`${staticText} ${value}`);
     return element;
+  }
+
+  printErrors(errors = []) {
+    if (Array.isArray(errors)) {
+      errors.forEach(err => {
+        this.errorsContainer.append(this.createText('Ошыбка: ', err.msg))
+      });
+      return;
+    }
+
+    this.errorsContainer.innerHTML = '';
   }
 
   createElement(data = {}) {
